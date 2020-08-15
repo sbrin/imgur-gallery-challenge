@@ -4,8 +4,18 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    state: {},
+    state: {
+        filter: {
+            section: "top",
+            sort: "top",
+            window: "week",
+            page: ""
+        },
+        items: []
+    },
     mutations: {},
-    actions: {},
+    actions: {
+        get
+    },
     modules: {}
 });
