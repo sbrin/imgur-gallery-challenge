@@ -1,15 +1,21 @@
 <template lang="pug">
-  div
+.section
+  .container
+    ImgFilter
+  .container
+    ImgGallery
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import ImgFilter from "@/components/ImgFilter.vue";
+import ImgGallery from "@/components/ImgGallery.vue";
 
 @Component({
     name: "Home",
     components: {
-        ImgFilter
+        ImgFilter,
+        ImgGallery
     }
 })
 export default class Home extends Vue {
