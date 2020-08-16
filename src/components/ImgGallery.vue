@@ -1,16 +1,19 @@
 <template lang="pug">
 div
-    .euw-gallery
-        .euw-gallery__item(
+    .columns.is-multiline
+        .column.is-one-quarter(
             v-for="(item, idx) in items"
-            @click="$emit('showPreview', item)"
+            
         )
-            .euw-gallery__title {{ item.title }}
-            .euw-gallery__image
-                img(
-                    v-lazy="`https://i.imgur.com/${item.cover}.jpg`"
-                    :alt="item.title"
-                )
+            .box(
+                @click="$emit('showPreview', item)"
+            )
+                .title.is-5 {{ item.title }}
+                .content
+                    img(
+                        v-lazy="`https://i.imgur.com/${item.cover}.jpg`"
+                        :alt="item.title"
+                    )
     .block
         b-progress(
             type="is-success"
@@ -57,6 +60,7 @@ export default class ImgGallery extends Vue {
     }
 
     loadGallery() {
+        this.$store.commit("SET_GALLERY_ITEMS", []);
         this.$store.commit("SET_FILTER_KEY", { page: 0 });
         this.waitingForResponse = true;
         return this.getGallery().then(() => {
@@ -79,35 +83,7 @@ export default class ImgGallery extends Vue {
 </script>
 
 <style scoped>
-.euw-gallery {
-    display: flex;
-    flex-wrap: wrap;
-}
-.euw-gallery__item {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 10px;
+.box {
     cursor: pointer;
-}
-.euw-gallery__image {
-    overflow: hidden;
-    align-items: center;
-    justify-content: center;
-}
-@media screen and (min-width: 640px) {
-    .euw-gallery__item {
-        width: 50%;
-        min-height: 320px;
-    }
-}
-@media screen and (min-width: 960px) {
-    .euw-gallery__item {
-        width: 33.33%;
-    }
-}
-@media screen and (min-width: 1280px) {
-    .euw-gallery__item {
-        width: 25%;
-    }
 }
 </style>

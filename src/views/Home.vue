@@ -2,13 +2,17 @@
 .section
   .container.box
     ImgFilter
-  .container.box
+  .container
     ImgGallery(
       @showPreview="showPreview"
       @closePreview="closePreview"
     )
   b-modal(
     :active.sync="isPreviewVisible"
+    aria-role="dialog"
+    aria-modal
+    scroll="keep"
+    width="640px"
   )
     ImgPreview(
       :image="image"

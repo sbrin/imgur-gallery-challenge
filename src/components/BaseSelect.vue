@@ -14,7 +14,7 @@ b-field(:label="label")
 <script lang="ts">
 import { Component, Prop, Watch, Vue } from "vue-property-decorator";
 
-@Component({})
+@Component
 export default class BaseSelect extends Vue {
     @Prop() private label!: string;
     @Prop() private options!: Array<SelectOption>;

@@ -1,5 +1,7 @@
 <template lang="pug">
     .card
+        .card-header
+            p.card-header-title {{ image.title }}
         .card-image
             figure.image.euw-image
                 img(
@@ -7,9 +9,7 @@
                     :alt="image.title"
                 )
         .card-content
-            .content
-                p.title.is-4 {{ image.title }}
-                p.subtitle.is-6 {{ image.description }}
+            p.subtitle.is-6 {{ image.description }}
         .card-footer
             .card-footer-item 👍 {{ image.ups }}
             .card-footer-item 👎 {{ image.downs }}
@@ -24,15 +24,3 @@ export default class ImgPreview extends Vue {
     @Prop() private image!: GalleryImage;
 }
 </script>
-<style scoped>
-.euw-image {
-    display: flex;
-    justify-content: center;
-}
-@media screen and (min-width: 641px) {
-    .euw-image img {
-        max-height: 80vh;
-        width: auto;
-    }
-}
-</style>

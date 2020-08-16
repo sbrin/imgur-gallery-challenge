@@ -1,40 +1,41 @@
 <template lang="pug">
-    .columns.is-mobile
-        .column
-            BaseSelect(
-                label="Section"
-                :value="filter.section"
-                :options="listSections"
-                @input="setFilter('section', $event)"
-            )
-        .column
-            BaseSelect(
-                label="Sort"
-                :value="filter.sort"
-                :options="listSortAvailable"
-                @input="setFilter('sort', $event)"
-            )
-        .column
-            BaseSelect(
-                v-if="filter.section === 'top'"
-                label="Window"
-                :value="filter.window"
-                :options="listWindow"
-                @input="setFilter('window', $event)"
-            )
-        .column
-            .field
-                .block
-                b-switch(
-                    :value="filter.showViral"
-                    @input="setFilter('viral', $event)"
-                ) Viral
+    .columns
+        .columns.column.is-mobile
+            .column
+                BaseSelect(
+                    label="Section"
+                    :value="filterParams.section"
+                    :options="listSections"
+                    @input="setFilter('section', $event)"
+                )
+            .column
+                BaseSelect(
+                    label="Sort"
+                    :value="filterParams.sort"
+                    :options="listSortAvailable"
+                    @input="setFilter('sort', $event)"
+                )
+        .columns.column.is-mobile
+            .column
+                .field
+                    .block
+                    b-switch(
+                        :value="filterParams.showViral"
+                        @input="setFilter('viral', $event)"
+                    ) Viral
+            .column
+                BaseSelect(
+                    v-if="filterParams.section === 'top'"
+                    label="Window"
+                    :value="filterParams.window"
+                    :options="listWindow"
+                    @input="setFilter('window', $event)"
+                )
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import BaseSelect from "@/components/BaseSelect.vue";
-import { mapMutations } from "vuex";
 
 @Component({
     components: {
@@ -98,11 +99,11 @@ export default class ImgFilter extends Vue {
         }
     ];
 
-    get filter() {
+    get filterParams() {
         return this.$store.state.filter;
     }
     get listSortAvailable() {
-        if (this.filter.section === "user") {
+        if (this.filterParams.section === "user") {
             return this.listSort;
         }
         return this.listSort.filter(item => item.value !== "rising");

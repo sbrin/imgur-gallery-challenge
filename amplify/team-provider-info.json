@@ -1,0 +1,23 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-imgurgallery-dev-155149-authRole",
+            "UnauthRoleArn": "arn:aws:iam::156533490125:role/amplify-imgurgallery-dev-155149-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::156533490125:role/amplify-imgurgallery-dev-155149-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-imgurgallery-dev-155149-deployment",
+            "UnauthRoleName": "amplify-imgurgallery-dev-155149-unauthRole",
+            "StackName": "amplify-imgurgallery-dev-155149",
+            "StackId": "arn:aws:cloudformation:us-east-1:156533490125:stack/amplify-imgurgallery-dev-155149/423d90a0-dfbf-11ea-b1b6-0a3fc8cbcb75",
+            "AmplifyAppId": "d4hxjkjmqtv2d"
+        },
+        "categories": {
+            "hosting": {
+                "amplifyhosting": {
+                    "appId": "d4hxjkjmqtv2d",
+                    "type": "manual"
+                }
+            }
+        }
+    }
+}
