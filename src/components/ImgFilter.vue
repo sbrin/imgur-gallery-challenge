@@ -5,14 +5,14 @@
                 label="Section"
                 :value="filter.section"
                 :options="listSections"
-                @input="setFilterSection"
+                @input="setFilter('section', $event)"
             )
         .column
             BaseSelect(
                 label="Sort"
                 :value="filter.sort"
                 :options="listSortAvailable"
-                @input="setFilterSort"
+                @input="setFilter('sort', $event)"
             )
         .column
             BaseSelect(
@@ -20,14 +20,14 @@
                 label="Window"
                 :value="filter.window"
                 :options="listWindow"
-                @input="setFilterWindow"
+                @input="setFilter('window', $event)"
             )
         .column
             .field
                 .block
                 b-switch(
                     :value="filter.showViral"
-                    @input="setFilterViral"
+                    @input="setFilter('viral', $event)"
                 ) Viral
 </template>
 
@@ -40,14 +40,7 @@ import { mapMutations } from "vuex";
     components: {
         BaseSelect
     },
-    methods: {
-        ...mapMutations([
-            "setFilterSection",
-            "setFilterSort",
-            "setFilterWindow",
-            "setFilterViral"
-        ])
-    }
+    methods: {}
 })
 export default class ImgFilter extends Vue {
     listSections = [
@@ -113,6 +106,11 @@ export default class ImgFilter extends Vue {
             return this.listSort;
         }
         return this.listSort.filter(item => item.value !== "rising");
+    }
+
+    setFilter(key: string, value: string) {
+        this.$store.commit("SET_FILTER_KEY", { [key]: value });
+        this.$root.$emit("filterChange");
     }
 }
 </script>

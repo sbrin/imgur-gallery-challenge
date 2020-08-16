@@ -23,7 +23,7 @@ export default class BaseSelect extends Vue {
     val = "";
 
     @Watch("value")
-    valueChanged(newValue) {
+    valueChanged(newValue: string) {
         this.val = newValue;
     }
 

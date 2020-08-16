@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
+import GALLERY from "@/response";
 
 Vue.use(Vuex);
 
@@ -10,37 +11,40 @@ export default new Vuex.Store({
             section: "hot",
             sort: "viral",
             window: "day",
-            page: "",
+            page: 0,
             showViral: true
         },
         items: []
     },
     mutations: {
-        setFilterSection(state, payload: string) {
-            if (payload !== "user" && state.filter.sort === "rising") {
-                state.filter.sort = "viral";
-            }
-            state.filter.section = payload;
+        SET_FILTER_KEY(state, filter) {
+            state.filter = {
+                ...state.filter,
+                ...filter
+            };
         },
-        setFilterSort(state, payload: string) {
-            state.filter.sort = payload;
-        },
-        setFilterWindow(state, payload: string) {
-            state.filter.window = payload;
-        },
-        setFilterViral(state, payload: boolean) {
-            state.filter.showViral = payload;
-        },
-        setItems(state, items) {
+        SET_GALLERY_ITEMS(state, items) {
             state.items = items;
+        },
+        APPEND_GALLERY_ITEMS(state, items) {
+            state.items = state.items.concat(items);
         }
     },
     actions: {
-        getGallery(context) {
+        getGallery(context, append = false) {
+            if (append) {
+                context.commit("SET_FILTER_KEY", {
+                    page: context.state.filter.page + 1
+                });
+            } else {
+                context.commit("SET_FILTER_KEY", {
+                    page: 0
+                });
+            }
             const FILTER = context.state.filter;
             return axios
                 .get(
-                    `https://api.imgur.com/3/gallery/${FILTER.section}/${FILTER.sort}/${FILTER.window}/${FILTER.page}?showViral=${FILTER.showViral}&mature=false&album_previews=true`,
+                    `https://api.imgur.com/3/gallery/${FILTER.section}/${FILTER.sort}/${FILTER.window}/${FILTER.page}?showViral=${FILTER.showViral}&mature=false&album_previews=false`,
                     {
                         headers: {
                             Authorization: `Bearer ${process.env.VUE_APP_ACCESS_TOKEN}`
@@ -52,22 +56,11 @@ export default new Vuex.Store({
                     if (!response.data || response.success !== true) {
                         return Promise.reject();
                     }
-                    context.commit("setItems", response.data);
-                });
-        },
-        getGalleryImage(context, galleryImageHash) {
-            return axios
-                .get(`https://api.imgur.com/3/image/${galleryImageHash}`, {
-                    headers: {
-                        Authorization: `Bearer ${process.env.VUE_APP_ACCESS_TOKEN}`
+                    if (append) {
+                        context.commit("APPEND_GALLERY_ITEMS", response.data);
+                    } else {
+                        context.commit("SET_GALLERY_ITEMS", response.data);
                     }
-                })
-                .then(response => response.data)
-                .then(response => {
-                    if (!response.data || response.success !== true) {
-                        return Promise.reject();
-                    }
-                    return response.data;
                 });
         }
     },
